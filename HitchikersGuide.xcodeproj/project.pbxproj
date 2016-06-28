@@ -10,12 +10,16 @@
 		7286E530F522ECAC545ACA68 /* libPods-HitchikersGuide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8EE926E521EA2E4C5841FE /* libPods-HitchikersGuide.a */; };
 		D4ED800E1D217E300092C710 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED800D1D217E300092C710 /* main.m */; };
 		D4ED80111D217E300092C710 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED80101D217E300092C710 /* AppDelegate.m */; };
-		D4ED80141D217E300092C710 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED80131D217E300092C710 /* ViewController.m */; };
 		D4ED80171D217E300092C710 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4ED80151D217E300092C710 /* Main.storyboard */; };
 		D4ED80191D217E300092C710 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4ED80181D217E300092C710 /* Assets.xcassets */; };
 		D4ED801C1D217E300092C710 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4ED801A1D217E300092C710 /* LaunchScreen.storyboard */; };
 		D4ED80241D22AE410092C710 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4ED80231D22AE410092C710 /* GoogleService-Info.plist */; };
 		D4ED80261D22BA7F0092C710 /* PrivateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4ED80251D22BA7F0092C710 /* PrivateInfo.plist */; };
+		D4ED80291D22D0690092C710 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED80281D22D0690092C710 /* LoginViewController.m */; };
+		D4ED802C1D22D0BA0092C710 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED802B1D22D0BA0092C710 /* HomeViewController.m */; };
+		D4ED802F1D22D0E80092C710 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED802E1D22D0E80092C710 /* SearchViewController.m */; };
+		D4ED80321D22D2700092C710 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED80311D22D2700092C710 /* SettingsViewController.m */; };
+		D4ED80351D22D3830092C710 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED80341D22D3830092C710 /* MapViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,14 +30,22 @@
 		D4ED800D1D217E300092C710 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4ED800F1D217E300092C710 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D4ED80101D217E300092C710 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D4ED80121D217E300092C710 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		D4ED80131D217E300092C710 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		D4ED80161D217E300092C710 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D4ED80181D217E300092C710 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4ED801B1D217E300092C710 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D4ED801D1D217E300092C710 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4ED80231D22AE410092C710 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D4ED80251D22BA7F0092C710 /* PrivateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PrivateInfo.plist; sourceTree = "<group>"; };
+		D4ED80271D22D0690092C710 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		D4ED80281D22D0690092C710 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		D4ED802A1D22D0BA0092C710 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		D4ED802B1D22D0BA0092C710 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		D4ED802D1D22D0E80092C710 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		D4ED802E1D22D0E80092C710 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		D4ED80301D22D2700092C710 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		D4ED80311D22D2700092C710 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		D4ED80331D22D3830092C710 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		D4ED80341D22D3830092C710 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,9 +101,8 @@
 				D4ED80251D22BA7F0092C710 /* PrivateInfo.plist */,
 				D4ED800F1D217E300092C710 /* AppDelegate.h */,
 				D4ED80101D217E300092C710 /* AppDelegate.m */,
-				D4ED80121D217E300092C710 /* ViewController.h */,
-				D4ED80131D217E300092C710 /* ViewController.m */,
 				D4ED80151D217E300092C710 /* Main.storyboard */,
+				D4ED80371D22D3D30092C710 /* Controllers */,
 				D4ED80181D217E300092C710 /* Assets.xcassets */,
 				D4ED801A1D217E300092C710 /* LaunchScreen.storyboard */,
 				D4ED801D1D217E300092C710 /* Info.plist */,
@@ -107,6 +118,23 @@
 				D4ED800D1D217E300092C710 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D4ED80371D22D3D30092C710 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D4ED80331D22D3830092C710 /* MapViewController.h */,
+				D4ED80341D22D3830092C710 /* MapViewController.m */,
+				D4ED80301D22D2700092C710 /* SettingsViewController.h */,
+				D4ED80311D22D2700092C710 /* SettingsViewController.m */,
+				D4ED802D1D22D0E80092C710 /* SearchViewController.h */,
+				D4ED802E1D22D0E80092C710 /* SearchViewController.m */,
+				D4ED802A1D22D0BA0092C710 /* HomeViewController.h */,
+				D4ED802B1D22D0BA0092C710 /* HomeViewController.m */,
+				D4ED80271D22D0690092C710 /* LoginViewController.h */,
+				D4ED80281D22D0690092C710 /* LoginViewController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,9 +261,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4ED80141D217E300092C710 /* ViewController.m in Sources */,
+				D4ED80291D22D0690092C710 /* LoginViewController.m in Sources */,
+				D4ED802C1D22D0BA0092C710 /* HomeViewController.m in Sources */,
+				D4ED80351D22D3830092C710 /* MapViewController.m in Sources */,
 				D4ED80111D217E300092C710 /* AppDelegate.m in Sources */,
+				D4ED802F1D22D0E80092C710 /* SearchViewController.m in Sources */,
 				D4ED800E1D217E300092C710 /* main.m in Sources */,
+				D4ED80321D22D2700092C710 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
