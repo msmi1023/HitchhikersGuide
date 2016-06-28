@@ -17,6 +17,11 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+	
+	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"PrivateInfo" ofType:@"plist"];
+	NSDictionary *configuration = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+	
+	NSString *googleApiKey = configuration[@"GoogleAPI"][@"GMSAPIKey"];
 }
 
 - (void)didReceiveMemoryWarning {

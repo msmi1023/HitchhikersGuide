@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7286E530F522ECAC545ACA68 /* libPods-HitchikersGuide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8EE926E521EA2E4C5841FE /* libPods-HitchikersGuide.a */; };
 		D4ED800E1D217E300092C710 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED800D1D217E300092C710 /* main.m */; };
 		D4ED80111D217E300092C710 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED80101D217E300092C710 /* AppDelegate.m */; };
 		D4ED80141D217E300092C710 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED80131D217E300092C710 /* ViewController.m */; };
 		D4ED80171D217E300092C710 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4ED80151D217E300092C710 /* Main.storyboard */; };
 		D4ED80191D217E300092C710 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4ED80181D217E300092C710 /* Assets.xcassets */; };
 		D4ED801C1D217E300092C710 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4ED801A1D217E300092C710 /* LaunchScreen.storyboard */; };
+		D4ED80241D22AE410092C710 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4ED80231D22AE410092C710 /* GoogleService-Info.plist */; };
+		D4ED80261D22BA7F0092C710 /* PrivateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4ED80251D22BA7F0092C710 /* PrivateInfo.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		187A6D14E6FADB4318A87610 /* Pods-HitchikersGuide.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HitchikersGuide.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HitchikersGuide/Pods-HitchikersGuide.debug.xcconfig"; sourceTree = "<group>"; };
+		9F01A63C04C47D270857BACC /* Pods-HitchikersGuide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HitchikersGuide.release.xcconfig"; path = "Pods/Target Support Files/Pods-HitchikersGuide/Pods-HitchikersGuide.release.xcconfig"; sourceTree = "<group>"; };
+		AA8EE926E521EA2E4C5841FE /* libPods-HitchikersGuide.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HitchikersGuide.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4ED80091D217E300092C710 /* HitchikersGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HitchikersGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4ED800D1D217E300092C710 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4ED800F1D217E300092C710 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -26,6 +32,8 @@
 		D4ED80181D217E300092C710 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4ED801B1D217E300092C710 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D4ED801D1D217E300092C710 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4ED80231D22AE410092C710 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D4ED80251D22BA7F0092C710 /* PrivateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PrivateInfo.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +41,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7286E530F522ECAC545ACA68 /* libPods-HitchikersGuide.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1FEB5DC25FB2FB85F3865E56 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				187A6D14E6FADB4318A87610 /* Pods-HitchikersGuide.debug.xcconfig */,
+				9F01A63C04C47D270857BACC /* Pods-HitchikersGuide.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5E6D6EEB15E1C23B41F26BC5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AA8EE926E521EA2E4C5841FE /* libPods-HitchikersGuide.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D4ED80001D217E300092C710 = {
 			isa = PBXGroup;
 			children = (
 				D4ED800B1D217E300092C710 /* HitchikersGuide */,
 				D4ED800A1D217E300092C710 /* Products */,
+				1FEB5DC25FB2FB85F3865E56 /* Pods */,
+				5E6D6EEB15E1C23B41F26BC5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +86,7 @@
 		D4ED800B1D217E300092C710 /* HitchikersGuide */ = {
 			isa = PBXGroup;
 			children = (
+				D4ED80251D22BA7F0092C710 /* PrivateInfo.plist */,
 				D4ED800F1D217E300092C710 /* AppDelegate.h */,
 				D4ED80101D217E300092C710 /* AppDelegate.m */,
 				D4ED80121D217E300092C710 /* ViewController.h */,
@@ -66,6 +95,7 @@
 				D4ED80181D217E300092C710 /* Assets.xcassets */,
 				D4ED801A1D217E300092C710 /* LaunchScreen.storyboard */,
 				D4ED801D1D217E300092C710 /* Info.plist */,
+				D4ED80231D22AE410092C710 /* GoogleService-Info.plist */,
 				D4ED800C1D217E300092C710 /* Supporting Files */,
 			);
 			path = HitchikersGuide;
@@ -86,9 +116,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D4ED80201D217E300092C710 /* Build configuration list for PBXNativeTarget "HitchikersGuide" */;
 			buildPhases = (
+				DCE7BFDE6BEFD71A04C052AF /* [CP] Check Pods Manifest.lock */,
 				D4ED80051D217E300092C710 /* Sources */,
 				D4ED80061D217E300092C710 /* Frameworks */,
 				D4ED80071D217E300092C710 /* Resources */,
+				68293967D64991E7737B06DC /* [CP] Embed Pods Frameworks */,
+				CE6FCAA981284217EC7E899E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -138,12 +171,62 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4ED801C1D217E300092C710 /* LaunchScreen.storyboard in Resources */,
+				D4ED80241D22AE410092C710 /* GoogleService-Info.plist in Resources */,
+				D4ED80261D22BA7F0092C710 /* PrivateInfo.plist in Resources */,
 				D4ED80191D217E300092C710 /* Assets.xcassets in Resources */,
 				D4ED80171D217E300092C710 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		68293967D64991E7737B06DC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HitchikersGuide/Pods-HitchikersGuide-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE6FCAA981284217EC7E899E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HitchikersGuide/Pods-HitchikersGuide-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DCE7BFDE6BEFD71A04C052AF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D4ED80051D217E300092C710 /* Sources */ = {
@@ -262,6 +345,7 @@
 		};
 		D4ED80211D217E300092C710 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 187A6D14E6FADB4318A87610 /* Pods-HitchikersGuide.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HitchikersGuide/Info.plist;
@@ -273,6 +357,7 @@
 		};
 		D4ED80221D217E300092C710 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F01A63C04C47D270857BACC /* Pods-HitchikersGuide.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HitchikersGuide/Info.plist;
@@ -301,6 +386,7 @@
 				D4ED80221D217E300092C710 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
