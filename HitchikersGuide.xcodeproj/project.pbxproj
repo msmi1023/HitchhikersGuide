@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7286E530F522ECAC545ACA68 /* libPods-HitchikersGuide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8EE926E521EA2E4C5841FE /* libPods-HitchikersGuide.a */; };
+		D4497A5F1D24127A001307AB /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = D4497A5E1D24127A001307AB /* Ride.m */; };
+		D4497A621D24129B001307AB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = D4497A611D24129B001307AB /* User.m */; };
+		D4497A651D241B9F001307AB /* SearchFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = D4497A641D241B9F001307AB /* SearchFilters.m */; };
 		D4ED800E1D217E300092C710 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED800D1D217E300092C710 /* main.m */; };
 		D4ED80111D217E300092C710 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ED80101D217E300092C710 /* AppDelegate.m */; };
 		D4ED80171D217E300092C710 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4ED80151D217E300092C710 /* Main.storyboard */; };
@@ -26,6 +29,12 @@
 		187A6D14E6FADB4318A87610 /* Pods-HitchikersGuide.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HitchikersGuide.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HitchikersGuide/Pods-HitchikersGuide.debug.xcconfig"; sourceTree = "<group>"; };
 		9F01A63C04C47D270857BACC /* Pods-HitchikersGuide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HitchikersGuide.release.xcconfig"; path = "Pods/Target Support Files/Pods-HitchikersGuide/Pods-HitchikersGuide.release.xcconfig"; sourceTree = "<group>"; };
 		AA8EE926E521EA2E4C5841FE /* libPods-HitchikersGuide.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HitchikersGuide.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4497A5D1D24127A001307AB /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
+		D4497A5E1D24127A001307AB /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		D4497A601D24129B001307AB /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		D4497A611D24129B001307AB /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		D4497A631D241B9F001307AB /* SearchFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFilters.h; sourceTree = "<group>"; };
+		D4497A641D241B9F001307AB /* SearchFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFilters.m; sourceTree = "<group>"; };
 		D4ED80091D217E300092C710 /* HitchikersGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HitchikersGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4ED800D1D217E300092C710 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4ED800F1D217E300092C710 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -77,6 +86,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D4497A5C1D241242001307AB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D4497A5D1D24127A001307AB /* Ride.h */,
+				D4497A5E1D24127A001307AB /* Ride.m */,
+				D4497A631D241B9F001307AB /* SearchFilters.h */,
+				D4497A641D241B9F001307AB /* SearchFilters.m */,
+				D4497A601D24129B001307AB /* User.h */,
+				D4497A611D24129B001307AB /* User.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		D4ED80001D217E300092C710 = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +120,7 @@
 		D4ED800B1D217E300092C710 /* HitchikersGuide */ = {
 			isa = PBXGroup;
 			children = (
+				D4497A5C1D241242001307AB /* Models */,
 				D4ED80251D22BA7F0092C710 /* PrivateInfo.plist */,
 				D4ED800F1D217E300092C710 /* AppDelegate.h */,
 				D4ED80101D217E300092C710 /* AppDelegate.m */,
@@ -263,9 +286,12 @@
 			files = (
 				D4ED80291D22D0690092C710 /* LoginViewController.m in Sources */,
 				D4ED802C1D22D0BA0092C710 /* HomeViewController.m in Sources */,
+				D4497A621D24129B001307AB /* User.m in Sources */,
+				D4497A651D241B9F001307AB /* SearchFilters.m in Sources */,
 				D4ED80351D22D3830092C710 /* MapViewController.m in Sources */,
 				D4ED80111D217E300092C710 /* AppDelegate.m in Sources */,
 				D4ED802F1D22D0E80092C710 /* SearchViewController.m in Sources */,
+				D4497A5F1D24127A001307AB /* Ride.m in Sources */,
 				D4ED800E1D217E300092C710 /* main.m in Sources */,
 				D4ED80321D22D2700092C710 /* SettingsViewController.m in Sources */,
 			);
