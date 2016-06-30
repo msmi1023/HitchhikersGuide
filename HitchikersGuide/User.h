@@ -10,6 +10,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "SearchFilters.h"
 
+
 @interface User : NSObject
 
 @property (strong, nonatomic) FBSDKAccessToken *token;
