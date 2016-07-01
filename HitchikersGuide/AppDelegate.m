@@ -19,7 +19,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// Override point for customization after application launch.
-    [GMSServices provideAPIKey:@"AIzaSyAEAm39o1_-0lzEFVi5_GnB0M0OEWHBcZg"];
+	
+	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"PrivateInfo" ofType:@"plist"];
+	NSDictionary *configuration = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+	NSString *googleApiKey = configuration[@"GoogleAPI"][@"GMSAPIKey"];
+    [GMSServices provideAPIKey:googleApiKey];
 	return YES;
 }
 
