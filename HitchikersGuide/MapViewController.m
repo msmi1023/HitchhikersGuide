@@ -7,7 +7,9 @@
 //
 
 #import "MapViewController.h"
-
+@import Firebase;
+@import FirebaseDatabase;
+@import FirebaseAuth;
 @import GoogleMaps;
 
 @interface MapViewController ()
@@ -25,12 +27,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // Create a GMSCameraPosition that tells the map to display the
-    // coordinate -33.86,151.20 at zoom level 6.
+    [self initMapPath];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Draw Map paths
+
+-(void)initMapPath {
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:42.3314
                                                             longitude:-83.0458
                                                                  zoom:10];
-
+    
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     mapView_.myLocationEnabled = YES;
     
@@ -48,10 +60,35 @@
     marker.snippet = @"Michigan";
     marker.map = mapView_;
     
+    //[self drawMapPathWithOrigin...];
+    //[self getcurrentMapPath];
     
+    [self drawMapPathWithOrigin:@"440+Boroughs,Detroit,Michigan" andDestination:@"15575+Lundy+Pkwy,Dearborn,Michigan"];
+}
+
+-(void)getcurrentMapPath {
+    FIRDatabaseReference *fbDatabaseRef = [[FIRDatabase database] reference];
+    FIRDatabaseReference *runsRef = [fbDatabaseRef.ref child:@"rides"];
+    FIRDatabaseQuery *trip = [[runsRef queryOrderedByKey] queryEqualToValue:@"ride1"];
     
-    NSString *str=@"http://maps.googleapis.com/maps/api/directions/json?origin=440+Boroughs,Detroit,Michigan&destination=15575+Lundy+Pkwy,Dearborn,Michigan&sensor=false";
+    [trip observeEventType: FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot *snapshot) {
+        //[self drawMapPathWithOrigin:snapshot.value[@"startLocation"] andDestination:snapshot.value[@"endLocation"]];
+        [self drawMapPathWithOrigin:@"440+Boroughs,Detroit,Michigan" andDestination:@"15575+Lundy+Pkwy,Dearborn,Michigan"];
+    }];
+    
+}
+
+-(void)drawMapPathWithOrigin:(NSString *)origin andDestination:(NSString *)destination {
+    
+    NSLog(@"origin = %@, destination = %@", origin, destination);
+    
+    //NSString *str=@"http://maps.googleapis.com/maps/api/directions/json?origin=440+Boroughs,Detroit,Michigan&destination=15575+Lundy+Pkwy,Dearborn,Michigan&sensor=false";
+    NSString *str= [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&sensor=false", origin, destination];
+    
     NSURL *url=[[NSURL alloc]initWithString:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    //NSURL *url=[[NSURL alloc]initWithString:[str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    //NSURL *url=[[NSURL alloc]initWithString:str];
+                
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     //NSData *data = [NSURLSession dataTaskWithRequest:request completionHandler:nil error:nil];
@@ -76,15 +113,7 @@
     } @catch (NSException * e) {
         // TODO: show error
     }
-       
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Draw Map paths
 
 -(NSMutableArray *)decodePolyLine: (NSMutableString *)encoded {
     [encoded replaceOccurrencesOfString:@"\\\\" withString:@"\\"
