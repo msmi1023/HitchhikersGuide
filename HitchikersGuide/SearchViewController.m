@@ -7,18 +7,35 @@
 //
 
 #import "SearchViewController.h"
+#import "SearchFilters.h"
 
 @interface SearchViewController ()
 
-
+@property (weak, nonatomic) IBOutlet UITextField *addressTextfield;
+@property (weak, nonatomic) IBOutlet UITextField *dateTextfield;
+@property (weak, nonatomic) IBOutlet UITextField *timeTextfield;
+@property (weak, nonatomic) IBOutlet UITextField *recurrenceTextfield;
 
 @end
 
+
+
 @implementation SearchViewController
 
+SearchFilters *searchFilter1;
+
+
+
+
+
+
 - (void)viewDidLoad {
+
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    searchFilter1 = [SearchFilters initWithDestinationAddress:_addressTextfield.text andArrivalDate:_dateTextfield.text andArrivalTime:_timeTextfield.text andRecurrence:_recurrenceTextfield.text];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,9 +56,8 @@
 
 - (IBAction)saveChangesButton:(id)sender {
     
-    NSLog(@"button pressed");
-    
-    
+    NSLog(@"button pressed \n address: %@ \n date: %@ \n time : %@ \n recurrence:  %@  \n", _addressTextfield.text, _dateTextfield.text, _timeTextfield.text, _recurrenceTextfield.text);
+
 }
 
 

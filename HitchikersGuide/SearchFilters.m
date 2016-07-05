@@ -11,14 +11,21 @@
 @implementation SearchFilters
 
 -(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence{
-
-    return 0;
+    
+    self = [super init];
+    if (self){
+        _destinationAddress = destinationAddress;
+        _arrivalDate = arrivalDate;
+        _arrivalTime = arrivalTime;
+        _recurrence = recurrence;
+    }
+    return self;
 }
 
 
 +(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence{
-
-    return 0;
+    return [[super alloc] initWithDestinationAddress:destinationAddress andArrivalDate:arrivalDate andArrivalTime:arrivalTime andRecurrence:recurrence];
+    
 }
 
 
