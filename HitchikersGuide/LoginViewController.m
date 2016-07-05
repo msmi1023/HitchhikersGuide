@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+@import Firebase;
 
 @interface LoginViewController ()
 
@@ -32,10 +33,31 @@
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
 	if (error == nil) {
-		[self performSegueWithIdentifier:@"loginToHomeViewSegue" sender:loginButton];
+		
+		[self loginToFirebase:^(){
+			[self performSegueWithIdentifier:@"loginToHomeViewSegue" sender:loginButton];
+		}];
+		
 	} else {
 		NSLog(error.localizedDescription);
 	}
+}
+
+- (void)loginToFirebase:(void(^)(void))callbackBlock {
+	//grab token from the fb auth provider
+	FIRAuthCredential *credential = [FIRFacebookAuthProvider credentialWithAccessToken:[FBSDKAccessToken currentAccessToken].tokenString];
+	
+	//then sign in to firebase with it
+	[[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser *user, NSError *error) {
+		//and once we're in, goto the map view
+		
+		if(error == nil) {
+			callbackBlock();
+		}
+		else {
+			NSLog(error.localizedDescription);
+		}
+	}];
 }
 
 /*
