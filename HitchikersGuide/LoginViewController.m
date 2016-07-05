@@ -40,24 +40,26 @@ FIRDatabaseReference *ref;
 			ref = [[FIRDatabase database] reference];
 			
 			//before we navigate, figure out the user object stuff in firebase
-			
 			[[ref child:@"filters"] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-				NSLog(@"filters obj: %@", snapshot.value);
+				NSDictionary *userObject;
 				
-				if(snapshot.value[[user uid]] != nil) {
-					//we have an object, use it
-				}
-				else {
-					//no object, create one and use it
-					NSDictionary *userObject = @{[user uid]: @{@"arrivalDate": @"", @"arrivalTime": @"", @"destinationAddress": @"", @"recurrence": @""}};
+				if(snapshot.value[[user uid]] == nil) {
+					//no object, create an empty one and push to firebase
+					userObject = @{[user uid]: @{@"arrivalDate": @"", @"arrivalTime": @"", @"destinationAddress": @"", @"recurrence": @""}};
 					
 					[[ref child:@"filters"] updateChildValues:userObject];
 				}
+				else {
+					//use the current one
+					userObject = snapshot.value[[user uid]];
+				}
+				
+				//do something to put user object into app memory here, once models are ready
+				
+				[self performSegueWithIdentifier:@"loginToHomeViewSegue" sender:loginButton];
 			} withCancelBlock:^(NSError * _Nonnull error) {
 				NSLog(@"cancel block error: %@", error.localizedDescription);
 			}];
-			
-			[self performSegueWithIdentifier:@"loginToHomeViewSegue" sender:loginButton];
 		}];
 		
 	} else {
