@@ -10,4 +10,36 @@
 
 @implementation Ride
 
+
+-(NSArray *) getPaths{
+    return 0;
+}
+
+-(int) numberOfSeatsRemaining{
+
+    return 0;
+}
+
+-(void) cancelRideOffer{
+
+}
+
+-(void) removeUserFromRide{
+
+}
+
+-(void) addUserToRide{
+
+}
+
+-(id) initWithStartLocation:(NSString *)startLocation andEndLocation:(NSString *)endLocation andStartDateTime:(NSDate *)startDateTime andEstimatedArivalTime:(NSDate *)estimatedArivalTime andDriver:(User *)driver andRiders:(NSMutableArray *)riders andFriendsOnly:(BOOL)friendsOnly{
+
+    return 0;
+}
+
+
+
+
+
+
 @end

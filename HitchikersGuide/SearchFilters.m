@@ -10,4 +10,20 @@
 
 @implementation SearchFilters
 
+-(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence{
+
+    return 0;
+}
+
+
++(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence{
+
+    return 0;
+}
+
+
+
+
+
+
 @end
