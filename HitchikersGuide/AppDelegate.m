@@ -10,7 +10,6 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 @import GoogleMaps;
 @import Firebase;
-@import FirebaseAuth;
 
 @interface AppDelegate ()
 
@@ -26,9 +25,10 @@
 	NSDictionary *configuration = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
 	NSString *googleApiKey = configuration[@"GoogleAPI"][@"GMSAPIKey"];
     [GMSServices provideAPIKey:googleApiKey];
-	return YES;
+	
+	[FIRApp configure];
     
-    [FIRApp configure];
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
