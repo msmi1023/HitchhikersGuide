@@ -69,6 +69,12 @@ FIRDatabaseReference *ref;
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
 	
+	NSError *error;
+	[[FIRAuth auth] signOut:&error];
+	if (!error) {
+		NSLog(@"Signed out successfully.");
+	}
+	
 }
 
 - (void)loginToFirebase:(void(^)(FIRUser *user))callbackBlock {
@@ -77,10 +83,11 @@ FIRDatabaseReference *ref;
 	
 	//then sign in to firebase with it
 	[[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser *user, NSError *error) {
-		//and once we're in, goto the map view
-		
 		if(error == nil) {
-			callbackBlock(user);
+			//add in a force refresh to help mitigate issues with firebase not responding
+			[user getTokenForcingRefresh:YES completion:^(NSString *token, NSError *error){
+				callbackBlock(user);
+			}];
 		}
 		else {
 			NSLog(error.localizedDescription);
