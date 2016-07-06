@@ -7,6 +7,8 @@
 //
 
 #import "MapViewController.h"
+#import "User.h"
+#import "SearchFilters.h"
 @import Firebase;
 @import FirebaseDatabase;
 @import FirebaseAuth;
@@ -14,8 +16,12 @@
 
 @interface MapViewController ()
 
-@property (strong, nonatomic) CLLocation *myOrigin;
-@property (strong, nonatomic) CLLocation *myDestination;
+//@property (strong, nonatomic) CLLocation *myOrigin;
+//@property (strong, nonatomic) CLLocation *myDestination;
+@property (strong, nonatomic) NSString *myOrigin;
+@property (strong, nonatomic) NSString *myDestination;
+@property double destLat;
+@property double destLong;
 
 @end
 
@@ -27,8 +33,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self initMapPath];
-    
+    [self getOriginAndDestination];
+    //[self drawMapPathWithOrigin:@"440 Boroughs, Detroit, Michigan, 48126" andDestination:@"15575 Lundy Pkwy, Dearborn, Michigan, 48126"];
+    [self convertAddressToLatLong];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,10 +45,43 @@
 
 #pragma mark - Draw Map paths
 
--(void)initMapPath {
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:42.3314
-                                                            longitude:-83.0458
+(void)getCurrentLocation {
+    
+}
+
+-(void)convertAddressToLatLong {
+    
+    CLGeocoder* geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:_myDestination completionHandler:^(NSArray* placemarks, NSError* error) {
+        
+        //this is causing a SIG error
+        CLPlacemark *firstObj = [placemarks objectAtIndex:0];
+        
+        _destLat = firstObj.location.coordinate.latitude;
+        _destLong = firstObj.location.coordinate.longitude;
+        [self configureCameraAndPin];
+    }];
+}
+
+-(void)getOriginAndDestination {
+    /***** myOrigin and myDestination will be retrieved values from filter in Firebase *****/
+    _myOrigin = @"440 Boroughs, Detroit, Michigan, 48202";
+    //_myDestination = @"15575 Lundy Pkwy, Dearborn, Michigan, 48126";
+    
+    _myDestination = [[User getInstance].currentSearchFilters objectForKey:@"destinationAddress"];
+}
+
+-(void)configureCameraAndPin {
+    
+    NSLog(@"configureCameraAndPin._myOrigin = %@", _myOrigin);
+    NSLog(@"configureCameraAndPin._myDestination = %@", _myDestination);
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:_destLat
+                                                            longitude:_destLong
                                                                  zoom:10];
+//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:42.3314
+//                                                            longitude:-83.0458
+//                                                                 zoom:10];
     
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     mapView_.myLocationEnabled = YES;
@@ -55,38 +95,33 @@
     
     // Creates a marker in the center of the map.
     GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(42.3314, -83.0458);
-    marker.title = @"Detroit";
-    marker.snippet = @"Michigan";
+    //marker.position = CLLocationCoordinate2DMake(42.3314, -83.0458);
+    marker.position = CLLocationCoordinate2DMake(_destLat, _destLong);
+    //marker.title = @"Detroit";
+    //marker.snippet = @"Michigan";
+    marker.title = _myDestination;
     marker.map = mapView_;
     
-    //[self drawMapPathWithOrigin...];
-    //[self getcurrentMapPath];
-    
-    [self drawMapPathWithOrigin:@"440+Boroughs,Detroit,Michigan" andDestination:@"15575+Lundy+Pkwy,Dearborn,Michigan"];
+    [self drawMapPath];
 }
 
--(void)getcurrentMapPath {
-    FIRDatabaseReference *fbDatabaseRef = [[FIRDatabase database] reference];
-    FIRDatabaseReference *runsRef = [fbDatabaseRef.ref child:@"rides"];
-    FIRDatabaseQuery *trip = [[runsRef queryOrderedByKey] queryEqualToValue:@"ride1"];
-    
-    [trip observeEventType: FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot *snapshot) {
-        //[self drawMapPathWithOrigin:snapshot.value[@"startLocation"] andDestination:snapshot.value[@"endLocation"]];
-        [self drawMapPathWithOrigin:@"440+Boroughs,Detroit,Michigan" andDestination:@"15575+Lundy+Pkwy,Dearborn,Michigan"];
-    }];
-    
+-(NSString *)formatAddressForURL:(NSString *)inputAddress {
+    NSString *newString = [inputAddress stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    newString = [newString stringByReplacingOccurrencesOfString:@",+" withString:@","];
+    return newString;
 }
 
--(void)drawMapPathWithOrigin:(NSString *)origin andDestination:(NSString *)destination {
+//-(void)drawMapPathWithOrigin:(NSString *)origin andDestination:(NSString *)destination {
+-(void)drawMapPath {
     
-    NSLog(@"origin = %@, destination = %@", origin, destination);
+    _myOrigin = [self formatAddressForURL:_myOrigin];
+    _myDestination = [self formatAddressForURL:_myDestination];
     
     //NSString *str=@"http://maps.googleapis.com/maps/api/directions/json?origin=440+Boroughs,Detroit,Michigan&destination=15575+Lundy+Pkwy,Dearborn,Michigan&sensor=false";
-    NSString *str= [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&sensor=false", origin, destination];
+    NSString *str= [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&sensor=false", _myOrigin, _myDestination];
     
-    NSURL *url=[[NSURL alloc]initWithString:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    //NSURL *url=[[NSURL alloc]initWithString:[str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    //NSURL *url=[[NSURL alloc]initWithString:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURL *url=[[NSURL alloc]initWithString:[str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     //NSURL *url=[[NSURL alloc]initWithString:str];
                 
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
@@ -146,8 +181,8 @@
         lng += dlng;
         NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5] ;
         NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5] ;
-        printf("[%f,", [latitude doubleValue]);
-        printf("%f]", [longitude doubleValue]);
+        //printf("[%f,", [latitude doubleValue]);
+        //printf("%f]", [longitude doubleValue]);
         CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]] ;
         [array addObject:loc];
     }
