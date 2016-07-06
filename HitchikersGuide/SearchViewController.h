@@ -10,4 +10,9 @@
 
 @interface SearchViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+
+@property (weak, nonatomic) IBOutlet UIDatePicker *timePicker;
+
+
 @end

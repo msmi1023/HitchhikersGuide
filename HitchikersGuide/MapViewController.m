@@ -45,9 +45,9 @@
 
 #pragma mark - Draw Map paths
 
-(void)getCurrentLocation {
-    
-}
+//-(void)getCurrentLocation {
+//    
+//}
 
 -(void)convertAddressToLatLong {
     
