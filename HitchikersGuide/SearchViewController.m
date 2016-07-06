@@ -12,30 +12,19 @@
 @interface SearchViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *addressTextfield;
-@property (weak, nonatomic) IBOutlet UITextField *dateTextfield;
-@property (weak, nonatomic) IBOutlet UITextField *timeTextfield;
 @property (weak, nonatomic) IBOutlet UITextField *recurrenceTextfield;
 
 @end
-
 
 
 @implementation SearchViewController
 
 SearchFilters *searchFilter1;
 
-
-
-
-
-
 - (void)viewDidLoad {
-
     
     [super viewDidLoad];
-
-    searchFilter1 = [SearchFilters initWithDestinationAddress:_addressTextfield.text andArrivalDate:_dateTextfield.text andArrivalTime:_timeTextfield.text andRecurrence:_recurrenceTextfield.text];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,11 +44,12 @@ SearchFilters *searchFilter1;
 
 
 - (IBAction)saveChangesButton:(id)sender {
+    searchFilter1 = [SearchFilters initWithDestinationAddress:_addressTextfield.text andArrivalDate:[_datePicker date] andArrivalTime:[_timePicker date] andRecurrence:_recurrenceTextfield.text];
+
+//    This NSLog is to check the values of the filters as assigned to it.
+//    NSLog(@"button pressed \n address: %@ \n date: %@ \n time : %@ \n recurrence:  %@  \n", searchFilter1.destinationAddress, searchFilter1.arrivalDate, searchFilter1.arrivalTime, searchFilter1.recurrence);
     
-    NSLog(@"button pressed \n address: %@ \n date: %@ \n time : %@ \n recurrence:  %@  \n", _addressTextfield.text, _dateTextfield.text, _timeTextfield.text, _recurrenceTextfield.text);
-
 }
-
 
 
 @end
