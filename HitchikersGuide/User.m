@@ -10,21 +10,35 @@
 
 @implementation User
 
-
--(void) offerRide{
-
++(instancetype)getInstance {
+    static User *applicationUser = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^ {
+        applicationUser = [[User alloc]initPrivately];
+    });
+    return applicationUser;
 }
 
--(void) joinRide{
-
+- (instancetype)init {
+    @throw [NSException exceptionWithName:@"Singleton" reason:@"Use +[User sharedAccessToken]" userInfo:nil];
+    return nil;
 }
 
--(id) initWithToken:(FBSDKAccessToken *)token andUserName:(NSString *)userName andDisplayName:(NSString *)displayName andVehicleType:(NSString *)vehicleType andTotalNumberOfSeats:(int)totalNumberOfSeats andOpenTrips:(NSMutableArray *)openTrips andOpenRides:(NSMutableArray *)openRides andDriverRole:(BOOL)driverRole andriderRole:(BOOL)riderRole andCurrentSearchFilters:(SearchFilters *)currentSearchFilters{
-
-    return 0;
+- (instancetype)initPrivately {
+    self = [super init];
+    return self;
 }
 
+- (void)setAccessToken:(FBSDKLoginManagerLoginResult *)loginResult {
+    _token = loginResult.token;
+}
 
+-(void) offerRide {
+    
+}
 
+-(void) joinRide {
+    
+}
 
 @end

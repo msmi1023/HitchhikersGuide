@@ -7,6 +7,8 @@
 //
 
 #import "LoginViewController.h"
+#import "User.h"
+#import "SearchFilters.h"
 @import Firebase;
 
 @interface LoginViewController ()
@@ -41,20 +43,35 @@ FIRDatabaseReference *ref;
 			
 			//before we navigate, figure out the user object stuff in firebase
 			[[ref child:@"filters"] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-				NSDictionary *userObject;
+				NSDictionary *filterObject;
+                //SearchFilter *filterObject; /*switch to this object type when class is ready*/
+                
+                NSLog(@"[user uid] = %@", [user uid]);
 				
 				if(snapshot.value[[user uid]] == nil) {
 					//no object, create an empty one and push to firebase
-					userObject = @{[user uid]: @{@"arrivalDate": @"", @"arrivalTime": @"", @"destinationAddress": @"", @"recurrence": @""}};
+					filterObject = @{[user uid]: @{@"arrivalDate": @"", @"arrivalTime": @"", @"destinationAddress": @"", @"recurrence": @""}};
 					
-					[[ref child:@"filters"] updateChildValues:userObject];
+					[[ref child:@"filters"] updateChildValues:filterObject];
 				}
 				else {
 					//use the current one
-					userObject = snapshot.value[[user uid]];
+					filterObject = snapshot.value[[user uid]];
 				}
 				
 				//do something to put user object into app memory here, once models are ready
+                [[User getInstance]setAccessToken:result];
+                if ([User getInstance]) {
+                    //[User getInstance].userName;
+                    [User getInstance].displayName = user.displayName;
+                    //[User getInstance].vehicleType;
+                    //[User getInstance].totalNumberOfSeats;
+                    //[User getInstance].openTrips;
+                    //[User getInstance].openRides;
+                    //[User getInstance].driverRole;
+                    //[User getInstance].riderRole;
+                    [User getInstance].currentSearchFilters = filterObject;
+                }
 				
 				[self performSegueWithIdentifier:@"loginToHomeViewSegue" sender:loginButton];
 			} withCancelBlock:^(NSError * _Nonnull error) {
@@ -69,6 +86,12 @@ FIRDatabaseReference *ref;
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
 	
+	NSError *error;
+	[[FIRAuth auth] signOut:&error];
+	if (!error) {
+		NSLog(@"Signed out successfully.");
+	}
+	
 }
 
 - (void)loginToFirebase:(void(^)(FIRUser *user))callbackBlock {
@@ -77,10 +100,11 @@ FIRDatabaseReference *ref;
 	
 	//then sign in to firebase with it
 	[[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser *user, NSError *error) {
-		//and once we're in, goto the map view
-		
 		if(error == nil) {
-			callbackBlock(user);
+			//add in a force refresh to help mitigate issues with firebase not responding
+			[user getTokenForcingRefresh:YES completion:^(NSString *token, NSError *error){
+				callbackBlock(user);
+			}];
 		}
 		else {
 			NSLog(error.localizedDescription);

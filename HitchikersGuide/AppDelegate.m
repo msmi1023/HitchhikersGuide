@@ -27,7 +27,8 @@
     [GMSServices provideAPIKey:googleApiKey];
 	
 	[FIRApp configure];
-	return YES;
+    
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
