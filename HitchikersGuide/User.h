@@ -22,10 +22,13 @@
 @property (strong, nonatomic) NSMutableArray *openRides;
 @property BOOL driverRole;
 @property BOOL riderRole;
-@property (strong, nonatomic) SearchFilters *currentSearchFilters;
+//@property (strong, nonatomic) SearchFilters *currentSearchFilters; /*switch back when class is ready*/
+@property (strong, nonatomic) NSDictionary *currentSearchFilters;
 
++(instancetype)getInstance;
+-(void)setAccessToken:(FBSDKLoginManagerLoginResult *) loginResult;
 -(void) offerRide;
 -(void) joinRide;
--(id) initWithToken:(FBSDKAccessToken *)token andUserName:(NSString *)userName andDisplayName:(NSString *)displayName andVehicleType:(NSString *)vehicleType andTotalNumberOfSeats:(int)totalNumberOfSeats andOpenTrips:(NSMutableArray *)openTrips andOpenRides:(NSMutableArray *)openRides andDriverRole:(BOOL)driverRole andriderRole:(BOOL)riderRole andCurrentSearchFilters:(SearchFilters *)currentSearchFilters;
+//-(id) initWithToken:(FBSDKAccessToken *)token andUserName:(NSString *)userName andDisplayName:(NSString *)displayName andVehicleType:(NSString *)vehicleType andTotalNumberOfSeats:(int)totalNumberOfSeats andOpenTrips:(NSMutableArray *)openTrips andOpenRides:(NSMutableArray *)openRides andDriverRole:(BOOL)driverRole andriderRole:(BOOL)riderRole andCurrentSearchFilters:(SearchFilters *)currentSearchFilters;
 
 @end
