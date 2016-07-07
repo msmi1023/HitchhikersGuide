@@ -18,24 +18,24 @@
 
 //@property (strong, nonatomic) CLLocation *myOrigin;
 //@property (strong, nonatomic) CLLocation *myDestination;
-@property (strong, nonatomic) NSString *myOrigin;
-@property (strong, nonatomic) NSString *myDestination;
-@property double destLat;
-@property double destLong;
+//@property (strong, nonatomic) NSString *myOrigin;
+//@property (strong, nonatomic) NSString *myDestination;
+//@property double destLat;
+//@property double destLong;
 
 @end
 
 @implementation MapViewController {
     GMSMapView *mapView_;
+    FIRDatabaseReference *ref;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    [self getOriginAndDestination];
-    //[self drawMapPathWithOrigin:@"440 Boroughs, Detroit, Michigan, 48126" andDestination:@"15575 Lundy Pkwy, Dearborn, Michigan, 48126"];
-    [self convertAddressToLatLong];
+    ref = [[FIRDatabase database] reference];
+    [self configureMap];
+    [self getRidesForFilters];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,39 +49,13 @@
 //    
 //}
 
--(void)convertAddressToLatLong {
-    
-    CLGeocoder* geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:_myDestination completionHandler:^(NSArray* placemarks, NSError* error) {
-        
-        //this is causing a SIG error
-        CLPlacemark *firstObj = [placemarks objectAtIndex:0];
-        
-        _destLat = firstObj.location.coordinate.latitude;
-        _destLong = firstObj.location.coordinate.longitude;
-        [self configureCameraAndPin];
-    }];
-}
-
--(void)getOriginAndDestination {
-    /***** myOrigin and myDestination will be retrieved values from filter in Firebase *****/
-    _myOrigin = @"440 Boroughs, Detroit, Michigan, 48202";
-    //_myDestination = @"15575 Lundy Pkwy, Dearborn, Michigan, 48126";
-    
-    _myDestination = [[User getInstance].currentSearchFilters objectForKey:@"destinationAddress"];
-}
-
--(void)configureCameraAndPin {
-    
-    NSLog(@"configureCameraAndPin._myOrigin = %@", _myOrigin);
-    NSLog(@"configureCameraAndPin._myDestination = %@", _myDestination);
-    
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:_destLat
-                                                            longitude:_destLong
-                                                                 zoom:10];
-//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:42.3314
-//                                                            longitude:-83.0458
+-(void)configureMap {
+//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:_destLat
+//                                                            longitude:_destLong
 //                                                                 zoom:10];
+        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:42.3314
+                                                                longitude:-83.0458
+                                                                     zoom:10];
     
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     mapView_.myLocationEnabled = YES;
@@ -92,17 +66,65 @@
     mapView_.settings.zoomGestures = YES;
     
     self.view = mapView_;
+
+}
+
+-(void)getRidesForFilters {
+    
+    
+    
+    FIRDatabaseQuery *destinationQuery = [[[ref child:@"rides"] queryOrderedByChild:@"endLocation"] queryEqualToValue:[User getInstance].currentSearchFilters[@"destinationAddress"] ];
+    [destinationQuery observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        for (NSString *key in snapshot.value) {
+            [self findPathForOrigin:snapshot.value[key][@"startLocation"] andDestination:snapshot.value[key][@"endLocation"]];
+        }
+    }];
+    
+    //[self getOriginAndDestination];
+    //[self drawMapPathWithOrigin:@"440 Boroughs, Detroit, Michigan, 48126" andDestination:@"15575 Lundy Pkwy, Dearborn, Michigan, 48126"];
+    //[self convertAddressToLatLong];
+}
+
+-(void)findPathForOrigin:(NSString *)origin andDestination:(NSString *)destination {
+    
+    [self toLatLongForAddressString:origin andOnComplete:^(double origLat, double origLng){
+        [self toLatLongForAddressString:destination andOnComplete:^(double destLat, double destLng){
+            //NSLog(@"origin %@, destination %@, origLat %f, origLng %f, destLat %f, destLng %f", origin, destination, origLat, origLng, destLat, destLng);
+            [self placePinsWithOrigLat:origLat andOrigLng:origLng andDestLat:destLat andDestLng:destLng];
+            [self drawMapPathWithOrigin:origin andDestination:destination];
+        }];
+    }];
+}
+
+- (void)toLatLongForAddressString:(NSString *)address andOnComplete:(void(^)(double lat, double lng))callbackBlock {
+    CLGeocoder* geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error) {
+        
+        CLPlacemark *firstObj = [placemarks objectAtIndex:0];
+        
+        callbackBlock(firstObj.location.coordinate.latitude, firstObj.location.coordinate.longitude);
+    }];
+}
+
+//-(void)getOriginAndDestination {
+//    /***** myOrigin and myDestination will be retrieved values from filter in Firebase *****/
+//    _myOrigin = @"440 Boroughs, Detroit, Michigan, 48202";
+//    //_myDestination = @"15575 Lundy Pkwy, Dearborn, Michigan, 48126";
+//    
+//    _myDestination = [[User getInstance].currentSearchFilters objectForKey:@"destinationAddress"];
+//    //_myDestination = [[User getInstance].currentSearchFilters.destinationAddress];
+//}
+
+-(void)placePinsWithOrigLat:(double)origLat andOrigLng:(double)origLng andDestLat:(double)destLat andDestLng:(double)destLng {
     
     // Creates a marker in the center of the map.
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    //marker.position = CLLocationCoordinate2DMake(42.3314, -83.0458);
-    marker.position = CLLocationCoordinate2DMake(_destLat, _destLong);
-    //marker.title = @"Detroit";
-    //marker.snippet = @"Michigan";
-    marker.title = _myDestination;
-    marker.map = mapView_;
-    
-    [self drawMapPath];
+    GMSMarker *originMarker = [[GMSMarker alloc] init];
+    GMSMarker *destMarker = [[GMSMarker alloc] init];
+    originMarker.position = CLLocationCoordinate2DMake(origLat, origLng);
+    destMarker.position = CLLocationCoordinate2DMake(destLat, destLng);
+    //marker.title = _myDestination;
+    originMarker.map = mapView_;
+    destMarker.map = mapView_;
 }
 
 -(NSString *)formatAddressForURL:(NSString *)inputAddress {
@@ -112,13 +134,13 @@
 }
 
 //-(void)drawMapPathWithOrigin:(NSString *)origin andDestination:(NSString *)destination {
--(void)drawMapPath {
+-(void)drawMapPathWithOrigin:(NSString *)origin andDestination:(NSString *)destination {
     
-    _myOrigin = [self formatAddressForURL:_myOrigin];
-    _myDestination = [self formatAddressForURL:_myDestination];
+    origin = [self formatAddressForURL:origin];
+    destination = [self formatAddressForURL:destination];
     
     //NSString *str=@"http://maps.googleapis.com/maps/api/directions/json?origin=440+Boroughs,Detroit,Michigan&destination=15575+Lundy+Pkwy,Dearborn,Michigan&sensor=false";
-    NSString *str= [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&sensor=false", _myOrigin, _myDestination];
+    NSString *str= [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&sensor=false", origin, destination];
     
     //NSURL *url=[[NSURL alloc]initWithString:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURL *url=[[NSURL alloc]initWithString:[str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];

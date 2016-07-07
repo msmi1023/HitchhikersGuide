@@ -7,7 +7,8 @@
 //
 
 #import "SearchViewController.h"
-#import "SearchFilters.h"
+//#import "SearchFilters.h"
+#import "User.h"
 
 @interface SearchViewController ()
 
@@ -44,7 +45,9 @@ SearchFilters *searchFilter1;
 
 
 - (IBAction)saveChangesButton:(id)sender {
-    searchFilter1 = [SearchFilters initWithDestinationAddress:_addressTextfield.text andArrivalDate:[_datePicker date] andArrivalTime:[_timePicker date] andRecurrence:_recurrenceTextfield.text];
+    [User getInstance].currentSearchFilters =  @{@"arrivalDate":[_datePicker date], @"arrivalTime":[_timePicker date], @"destinationAddress":_addressTextfield.text, @"recurrence":_recurrenceTextfield.text};
+    
+    //searchFilter1 = [SearchFilters initWithDestinationAddress:_addressTextfield.text andArrivalDate:[_datePicker date] andArrivalTime:[_timePicker date] andRecurrence:_recurrenceTextfield.text];
 
 //    This NSLog is to check the values of the filters as assigned to it.
 //    NSLog(@"button pressed \n address: %@ \n date: %@ \n time : %@ \n recurrence:  %@  \n", searchFilter1.destinationAddress, searchFilter1.arrivalDate, searchFilter1.arrivalTime, searchFilter1.recurrence);
