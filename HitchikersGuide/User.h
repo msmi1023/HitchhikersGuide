@@ -22,8 +22,8 @@
 @property (strong, nonatomic) NSMutableArray *openRides;
 @property BOOL driverRole;
 @property BOOL riderRole;
-//@property (strong, nonatomic) SearchFilters *currentSearchFilters; /*switch back when class is ready*/
-@property (strong, nonatomic) NSDictionary *currentSearchFilters;
+//@property (strong, nonatomic) SearchFilters *currentSearchFilters;
+@property (strong, nonatomic) NSMutableDictionary *currentSearchFilters;
 
 +(instancetype)getInstance;
 -(void)setAccessToken:(FBSDKLoginManagerLoginResult *) loginResult;

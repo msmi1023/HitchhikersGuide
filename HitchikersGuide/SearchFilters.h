@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import Firebase;
 
 @interface SearchFilters : NSObject
 
@@ -15,7 +16,8 @@
 @property (strong, nonatomic) NSDate *arrivalTime;
 @property (strong, nonatomic) NSString *recurrence;
 
--(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence;
-+(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence;
+-(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence andFIRRef:(FIRDatabaseReference *) sref;
++(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence andFIRRef:(FIRDatabaseReference *)ref;
+-(void)getFilterFromFIR:(FIRDatabaseReference *)ref;
 
 @end

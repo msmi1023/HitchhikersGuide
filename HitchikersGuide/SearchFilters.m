@@ -10,7 +10,7 @@
 
 @implementation SearchFilters
 
--(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence{
+-(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence andFIRRef:(FIRDatabaseReference *)ref{
     
     self = [super init];
     if (self){
@@ -19,18 +19,26 @@
         _arrivalTime = arrivalTime;
         _recurrence = recurrence;
     }
+    if ([_destinationAddress isEqual:@""]) {
+        [self setFilterInFIR:(FIRDatabaseReference *)ref];
+    }
     return self;
 }
 
-
-+(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence{
-    return [[super alloc] initWithDestinationAddress:destinationAddress andArrivalDate:arrivalDate andArrivalTime:arrivalTime andRecurrence:recurrence];
++(id)initWithDestinationAddress:(NSString *)destinationAddress andArrivalDate:(NSDate *)arrivalDate andArrivalTime:(NSDate *)arrivalTime andRecurrence:(NSString *)recurrence andFIRRef:(FIRDatabaseReference *)ref{
+    return [[super alloc] initWithDestinationAddress:destinationAddress andArrivalDate:arrivalDate andArrivalTime:arrivalTime andRecurrence:recurrence andFIRRef:ref];
     
 }
 
+-(void)setFilterInFIR:(FIRDatabaseReference *)ref {
+    
+    
+    //[[ref child:@"filters"] updateChildValues:filterObject];
+}
 
-
-
-
+-(void)getFilterFromFIR:(FIRDatabaseReference *)ref {
+    
+    
+}
 
 @end

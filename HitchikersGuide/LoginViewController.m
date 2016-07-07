@@ -8,7 +8,7 @@
 
 #import "LoginViewController.h"
 #import "User.h"
-#import "SearchFilters.h"
+//#import "SearchFilters.h"
 @import Firebase;
 
 @interface LoginViewController ()
@@ -43,20 +43,26 @@ FIRDatabaseReference *ref;
 			
 			//before we navigate, figure out the user object stuff in firebase
 			[[ref child:@"filters"] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-				NSDictionary *filterObject;
-                //SearchFilter *filterObject; /*switch to this object type when class is ready*/
+				NSMutableDictionary *filterObject;
+                //SearchFilters *filterObject = [[SearchFilters alloc]init];
                 
-                NSLog(@"[user uid] = %@", [user uid]);
+                //NSLog(@"[user uid] = %@", [user uid]);
 				
 				if(snapshot.value[[user uid]] == nil) {
 					//no object, create an empty one and push to firebase
-					filterObject = @{[user uid]: @{@"arrivalDate": @"", @"arrivalTime": @"", @"destinationAddress": @"", @"recurrence": @""}};
-					
+					filterObject = [@{[user uid]: @{@"arrivalDate": [NSDate date], @"arrivalTime": [NSDate date], @"destinationAddress": @"", @"recurrence": @""}} mutableCopy];
+                    
+                    //[filterObject initWithDestinationAddress:@"" andArrivalDate:nil andArrivalTime:nil andRecurrence:@"" andFIRRef:(FIRDatabaseReference *)ref];
 					[[ref child:@"filters"] updateChildValues:filterObject];
 				}
 				else {
 					//use the current one
-					filterObject = snapshot.value[[user uid]];
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+                    [dateFormatter setDateFormat: @"yyyy:MM:dd"];
+                    
+					filterObject = [snapshot.value[[user uid]] mutableCopy];
+                    filterObject[@"arrivalDate"] = [dateFormatter dateFromString:filterObject[@"arrivalDate"]];
+                    filterObject[@"arrivalTime"] = [dateFormatter dateFromString:filterObject[@"arrivalTime"]];
 				}
 				
 				//do something to put user object into app memory here, once models are ready
