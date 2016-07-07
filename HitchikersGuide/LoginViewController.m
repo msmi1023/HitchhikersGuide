@@ -35,8 +35,49 @@ FIRDatabaseReference *ref;
     // Dispose of any resources that can be recreated.
 }
 
+- (UIView *)createLoadingScreen {
+	UIView *appLoadingView;
+	CGRect screenRect = [[UIScreen mainScreen] bounds];
+	appLoadingView = [[UIView alloc] initWithFrame:screenRect];
+	[appLoadingView setBackgroundColor:[UIColor colorWithRed:0 green:0.508 blue:0.508 alpha:1]];
+	
+	[appLoadingView addSubview:[self createAppNameLabelForScreenRect:screenRect]];
+	[appLoadingView addSubview:[self createLoadingTextLabelForScreenRect:screenRect]];
+	
+	UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+	[appLoadingView addSubview: activityIndicator];
+	[activityIndicator startAnimating];
+	
+	return appLoadingView;
+}
+
+-(UILabel *)createAppNameLabelForScreenRect:(CGRect)screenRect {
+	UILabel *appNameLabel = [[UILabel alloc] initWithFrame:CGRectMake((screenRect.size.width/2)-150, 150, 300, 60)];
+	appNameLabel.text = @"The Hitchhiker's Guide";
+	appNameLabel.textColor = [UIColor whiteColor];
+	
+	[appNameLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:24]];
+	
+	appNameLabel.textAlignment = NSTextAlignmentCenter;
+	
+	return appNameLabel;
+}
+
+-(UILabel *)createLoadingTextLabelForScreenRect:(CGRect)screenRect {
+	UILabel *appNameLabel = [[UILabel alloc] initWithFrame:CGRectMake((screenRect.size.width/2)-150, 350, 300, 60)];
+	appNameLabel.text = @"Loading...";
+	appNameLabel.textColor = [UIColor whiteColor];
+	appNameLabel.textAlignment = NSTextAlignmentCenter;
+	
+	return appNameLabel;
+}
+
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
 	if (error == nil) {
+		
+		
+		[self.view addSubview:[self createLoadingScreen]];
 		
 		[self loginToFirebase:^(FIRUser *user){
 			ref = [[FIRDatabase database] reference];
