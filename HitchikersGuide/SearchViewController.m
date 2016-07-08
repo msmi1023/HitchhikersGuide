@@ -40,6 +40,10 @@ SearchFilters *searchFilter1;
     // Dispose of any resources that can be recreated.
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	[_addressTextfield resignFirstResponder];
+}
+
 /*
 #pragma mark - Navigation
 
