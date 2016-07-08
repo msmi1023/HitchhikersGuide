@@ -33,6 +33,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     ref = [[FIRDatabase database] reference];
     [self configureMap];
     [self getRidesForFilters];
@@ -71,12 +74,17 @@
 
 -(void)getRidesForFilters {
     
-    
-    
     FIRDatabaseQuery *destinationQuery = [[[ref child:@"rides"] queryOrderedByChild:@"endLocation"] queryEqualToValue:[User getInstance].currentSearchFilters[@"destinationAddress"] ];
     [destinationQuery observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        for (NSString *key in snapshot.value) {
-            [self findPathForOrigin:snapshot.value[key][@"startLocation"] andDestination:snapshot.value[key][@"endLocation"]];
+        
+        NSLog(@"User UID = %@", [User getInstance].userName);
+        NSLog(@"User filters = %@", [User getInstance].currentSearchFilters);
+        NSLog(@"snapshot.exists = %hhd", snapshot.exists);
+        
+        if (snapshot.exists) {
+            for (NSString *key in snapshot.value) {
+                [self findPathForOrigin:snapshot.value[key][@"startLocation"] andDestination:snapshot.value[key][@"endLocation"]];
+            }
         }
     }];
     

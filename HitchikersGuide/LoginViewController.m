@@ -76,7 +76,6 @@ FIRDatabaseReference *ref;
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
 	if (error == nil) {
 		
-		
 		[self.view addSubview:[self createLoadingScreen]];
 		
 		[self loginToFirebase:^(FIRUser *user){
@@ -88,28 +87,30 @@ FIRDatabaseReference *ref;
                 //SearchFilters *filterObject = [[SearchFilters alloc]init];
                 
                 //NSLog(@"[user uid] = %@", [user uid]);
-				
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+                [dateFormatter setDateFormat: @"yyyy:MM:dd:HH:mm:ss"];
+                
 				if(snapshot.value[[user uid]] == nil) {
 					//no object, create an empty one and push to firebase
-					filterObject = [@{[user uid]: @{@"arrivalDate": [NSDate date], @"arrivalTime": [NSDate date], @"destinationAddress": @"", @"recurrence": @""}} mutableCopy];
+					filterObject = [@{[user uid]: @{@"arrivalDate":[dateFormatter stringFromDate:[NSDate date]],
+                                                    @"arrivalTime":[dateFormatter stringFromDate:[NSDate date]],
+                                             @"destinationAddress": @""}
+                    } mutableCopy];
                     
                     //[filterObject initWithDestinationAddress:@"" andArrivalDate:nil andArrivalTime:nil andRecurrence:@"" andFIRRef:(FIRDatabaseReference *)ref];
 					[[ref child:@"filters"] updateChildValues:filterObject];
 				}
 				else {
 					//use the current one
-                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-                    [dateFormatter setDateFormat: @"yyyy:MM:dd"];
-                    
 					filterObject = [snapshot.value[[user uid]] mutableCopy];
                     filterObject[@"arrivalDate"] = [dateFormatter dateFromString:filterObject[@"arrivalDate"]];
-                    filterObject[@"arrivalTime"] = [dateFormatter dateFromString:filterObject[@"arrivalTime"]];
-				}
+                    filterObject[@"arrivalTime"] = [dateFormatter dateFromString:filterObject[@"arrivalTime"]];            
+                }
 				
 				//do something to put user object into app memory here, once models are ready
                 [[User getInstance]setAccessToken:result];
                 if ([User getInstance]) {
-                    //[User getInstance].userName;
+                    [User getInstance].userName = [user uid];
                     [User getInstance].displayName = user.displayName;
                     //[User getInstance].vehicleType;
                     //[User getInstance].totalNumberOfSeats;

@@ -9,23 +9,30 @@
 #import "SearchViewController.h"
 //#import "SearchFilters.h"
 #import "User.h"
+@import Firebase;
+@import FirebaseDatabase;
+@import FirebaseAuth;
 
 @interface SearchViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *addressTextfield;
-@property (weak, nonatomic) IBOutlet UITextField *recurrenceTextfield;
 
 @end
 
 
-@implementation SearchViewController
+@implementation SearchViewController {
+    FIRDatabaseReference *ref;
+}
 
 SearchFilters *searchFilter1;
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    //need function to populate filters with current user data
+    ref = [[FIRDatabase database] reference];
     
+    [self populateUserFilterValues];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,9 +50,27 @@ SearchFilters *searchFilter1;
 }
 */
 
+- (void)populateUserFilterValues {
+    
+    [_datePicker setDate:[[User getInstance].currentSearchFilters objectForKey:@"arrivalDate"]];
+    [_timePicker setDate:[[User getInstance].currentSearchFilters objectForKey:@"arrivalTime"]];
+    _addressTextfield.text = [[User getInstance].currentSearchFilters objectForKey:@"destinationAddress"];
+}
+
 
 - (IBAction)saveChangesButton:(id)sender {
-    [User getInstance].currentSearchFilters =  @{@"arrivalDate":[_datePicker date], @"arrivalTime":[_timePicker date], @"destinationAddress":_addressTextfield.text, @"recurrence":_recurrenceTextfield.text};
+    [User getInstance].currentSearchFilters =  [@{@"arrivalDate":[_datePicker date], @"arrivalTime":[_timePicker date], @"destinationAddress":_addressTextfield.text} mutableCopy];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat: @"yyyy:MM:dd:HH:mm:ss"];
+    ref = [[FIRDatabase database] reference];
+    NSDictionary *filterObject = [@{[User getInstance].userName:
+                              @{@"arrivalDate" : [dateFormatter stringFromDate:_datePicker.date],
+                                @"arrivalTime" : [dateFormatter stringFromDate:_datePicker.date],
+                         @"destinationAddress" : _addressTextfield.text
+    }} mutableCopy];
+    [[ref child:@"filters"] updateChildValues:filterObject];    
+    
     
     //searchFilter1 = [SearchFilters initWithDestinationAddress:_addressTextfield.text andArrivalDate:[_datePicker date] andArrivalTime:[_timePicker date] andRecurrence:_recurrenceTextfield.text];
 
