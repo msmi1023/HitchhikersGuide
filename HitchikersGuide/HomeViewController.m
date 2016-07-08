@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "User.h"
 
 @interface HomeViewController ()
 
@@ -24,7 +25,9 @@ UIView *instructionCoverView;
 
 - (void)viewWillAppear:(BOOL)animated {
 	// get your window screen size
-	[self configureInstructionPopup];
+	if([[User getInstance].currentSearchFilters[@"destinationAddress"] isEqualToString:@""]) {
+		[self configureInstructionPopup];
+	}
 }
 
 - (void)configureInstructionPopup {
